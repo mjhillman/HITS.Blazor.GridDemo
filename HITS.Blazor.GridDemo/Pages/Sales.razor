@@ -1,0 +1,14 @@
+﻿@page "/Sales"
+
+<div class="container-fluid pt-3">
+    <div class="row">
+        <div class="col-md-12">
+            <SimpleGrid T="SalesModel" Parameters="_gridViewModel.SalesGridParameters" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <ModalDialog ViewModel=_dialogViewModel></ModalDialog>
+        </div>
+    </div>
+</div>

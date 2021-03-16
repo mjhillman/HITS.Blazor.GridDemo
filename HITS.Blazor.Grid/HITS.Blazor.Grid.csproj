@@ -1,0 +1,76 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Version>2021.3.16</Version>
+    <Description>Grid to display List&lt;T&gt; using property attributes rather than column definition.</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Company>Hillman IT Services LLC</Company>
+    <Authors>Hillman IT Services LLC</Authors>
+    <Copyright>Hillman IT Services LLC 2021</Copyright>
+    <PackageReleaseNotes>Reorganized code to use view model.</PackageReleaseNotes>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/mjhillman/HITS.Blazor.GridDemo</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mjhillman/HITS.Blazor.GridDemo</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>Blazor .Net5</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <AssemblyVersion>2021.3.16.0</AssemblyVersion>
+    <FileVersion>2021.3.16.0</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="MIT_License.txt" />
+    <None Include="MIT_License.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.2" />
+    <PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="SimpleGrid.razor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\button_green_first.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\button_green_last.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\button_green_left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\button_green_right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\Doc-Cancel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\Sort_16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="MIT_License.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HITS.LIB.Extensions\HITS.LIB.Extensions.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,162 @@
+﻿@using System
+@implements IDisposable
+
+@if (ViewModel.PopupVisible)
+{
+    <div class="modal fade show" style="display:block" aria-modal="true" role="dialog">
+        <div class="modal-dialog" @onclick:stopPropagation="true">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Product Editor</h4>
+                    <button type="button" class="close" @onclick="OnCancel">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="container">
+
+                        <div class="row">
+                            <div class="col-lg">
+                                <label>Product ID:</label>
+                            </div>
+                            <div class="col-lg">
+                                <input type="number" name="ProductId" @bind-value=ViewModel.ModelClone.ProductId readonly />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg">
+                                <label>Product:</label>
+                            </div>
+                            <div class="col-lg">
+                                <input type="text" name="Product" @bind-value=ViewModel.ModelClone.Product />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg">
+                                <label>Supplier:</label>
+                            </div>
+                            <div class="col-lg">
+                                <input type="text" name="Supplier" @bind-value=ViewModel.ModelClone.Supplier />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg">
+                                <label>Category:</label>
+                            </div>
+                            <div class="col-lg">
+                                <input type="text" name="Category" @bind-value=ViewModel.ModelClone.Category />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg">
+                                <label>Unit Qty:</label>
+                            </div>
+                            <div class="col-lg">
+                                <input type="text" name="UnitQty" @bind-value=ViewModel.ModelClone.UnitQty />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg">
+                                <label>Unit Price:</label>
+                            </div>
+                            <div class="col-lg">
+                                <input type="text" name="UnitPrice" @bind-value=ViewModel.ModelClone.UnitPrice />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg">
+                                <label>In Stock:</label>
+                            </div>
+                            <div class="col-lg">
+                                <input type="number" name="UnitsInStock" @bind-value=ViewModel.ModelClone.UnitsInStock />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg">
+                                <label>Reorder Level:</label>
+                            </div>
+                            <div class="col-lg">
+                                <input type="number" name="ReorderLevel" @bind-value=ViewModel.ModelClone.ReorderLevel />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg">
+                                <label>Discontinued:</label>
+                            </div>
+                            <div class="col-lg">
+                                @if (ViewModel.ModelClone.Discontinued)
+                                {
+                                    <input type="checkbox" name="Discontinued" @bind-value=ViewModel.ModelClone.Discontinued checked />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" name="Discontinued" @bind-value=ViewModel.ModelClone.Discontinued />
+                                }
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg">
+                                @if (validationResult != null && validationResult.Count > 0)
+                                {
+                                    foreach (string error in validationResult)
+                                    {
+                                        <p class="text-danger">@error</p>
+                                    }
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn" @onclick=OnCancel>Cancel</button>
+                    <button type="button" class="btn btn-info" @onclick=OnSave>Save</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public EventCallback OnSaveEvent { get; set; }
+
+    [Parameter]
+    public ProductEditorViewModel ViewModel { get; set; }
+
+    private List<string> validationResult { get; set; }
+
+    void OnSave()
+    {
+        validationResult = ViewModel.ModelClone.ValidateModel();
+        if (validationResult == null || validationResult.Count == 0)
+        {
+            ViewModel.PopupVisible = false;
+            OnSaveEvent.InvokeAsync();
+        }
+    }
+
+    void OnCancel()
+    {
+        ViewModel.PopupVisible = false;
+    }
+
+    public void Dispose()
+    {
+        validationResult?.Clear();
+        validationResult = null;
+    }
+}

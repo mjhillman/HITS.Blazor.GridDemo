@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>2021.3.16</Version>
+    <Copyright>MIT</Copyright>
+    <Description>data access layer for SQL Server</Description>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\Mike\Documents\VisualStudioProjects\DotNet5\HITS.Blazor.GridDemo\HITS.LIB.SqlServer\HITS.LIB.SqlServer\HITS.LIB.SqlServer.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\HITS.LIB.Extensions\HITS.LIB.Extensions.csproj" />
+  </ItemGroup>
+
+</Project>

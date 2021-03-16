@@ -1,0 +1,164 @@
+﻿@using System.Collections.Generic
+
+@typeparam T
+
+<div class=@Parameters.BootstrapContainerClass>
+    @if (readyToLoad)
+    {
+        <div class="@GetDivClassName(Parameters.BootstrapContainerClass, 12)">
+            <div class="row">
+                <div class="@GetDivClassName(Parameters.BootstrapColumnClass, 3)">
+                    <h3 style="color:darkblue">@Parameters.GridTitle</h3>
+                </div>
+                <div class="@GetDivClassName(Parameters.BootstrapColumnClass, 1)">
+                </div>
+                <div class="@GetDivClassName(Parameters.BootstrapColumnClass, 4)">
+                    @if (Parameters.ShowPager)
+                    {
+                        <span class="float-left">
+                            <img src="/images/button_green_first.png" alt="First" @onclick="@(() => GetPage("first"))" />&nbsp;
+                            <img src="/images/button_green_left.png" alt="Previous" @onclick="@(() => GetPage("previous"))" />
+                            <input type="text"
+                                   id="PageCount"
+                                   name="PageCount"
+                                   size="3"
+                                   align="middle"
+                                   style="display: inline; white-space: nowrap; text-align: center;"
+                                   @bind="@CurrentPage"
+                                   @onblur="@(() => GetPage(CurrentPage.ToString()))" />
+                            <img src="/images/button_green_right.png" alt="Next" @onclick="@(() => GetPage("next"))" />&nbsp;
+                            <img src="/images/button_green_last.png" alt="Last" @onclick="@(() => GetPage("last"))" />
+                        </span>
+                    }
+                </div>
+                <div class="@GetDivClassName(Parameters.BootstrapColumnClass, 1)">
+                </div>
+                <div class="@GetDivClassName(Parameters.BootstrapColumnClass, 2)">
+                    @if (!string.IsNullOrWhiteSpace(Parameters.SummaryColumnName))
+                    {
+                        <h3 style="color:darkblue">@GetSummaryText()</h3>
+                    }
+                </div>
+                <div class="@GetDivClassName(Parameters.BootstrapColumnClass, 1)">
+                    @if (Parameters.ShowAddNew)
+                    {
+                        <span class="float-right">
+                            <button type="button"
+                                    class="btn btn-outline-success"
+                                    style="display: inline; white-space: nowrap;"
+                                    @onclick="@(() => OnAddNewEvent.InvokeAsync(Parameters.GridTitle))">
+                                Add New
+                            </button>
+                        </span>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="@GetDivClassName(Parameters.BootstrapColumnClass, 12)">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <!--header row-->
+                                @foreach (KeyValuePair<string, object> column in ColumnsDictionary)
+                                {
+                                    if (Parameters.DataList != null &&
+                                        Parameters.DataList.Count > 0 &&
+                                        ShowInGrid(column.Key)
+                                        && !SortBy(column.Key))
+                                    {
+                                        <th>@column.Key</th>
+                                    }
+                                    else if (Parameters.DataList != null &&
+                                            Parameters.DataList.Count > 0 &&
+                                            ShowInGrid(column.Key) &&
+                                            SortBy(column.Key))
+                                    {
+                                        <th>
+                                            <img src="/images/Sort_16.png"
+                                                 alt="Sort"
+                                                 @onclick="@(() => OnSortClick(column.Key))" />
+                                            @column.Key
+                                        </th>
+                                    }
+                                }
+                                <!--edit column-->
+                                @if (Parameters.ShowEditColumn)
+                                {
+                                    <th>&nbsp;</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--filter row-->
+                            @if (Parameters.ShowFilterRow)
+                            {
+                                <tr>
+                                    @foreach (KeyValuePair<string, object> column in ColumnsDictionary)
+                                    {
+                                        if (Parameters.DataList != null &&
+                                            Parameters.DataList.Count > 0 &&
+                                            ShowInGrid(column.Key) &&
+                                            !FilterBy(column.Key))
+                                        {
+                                            <td>&nbsp;</td>
+                                        }
+                                        else if (Parameters.DataList != null &&
+                                                 Parameters.DataList.Count > 0 &&
+                                                 ShowInGrid(column.Key) &&
+                                                 FilterBy(column.Key))
+                                        {
+                                            <td>
+                                                <input type="text" class="form-control"
+                                                       id="@column.Key"
+                                                       name="@column.Key"
+                                                       @bind="@FilterDictionary[column.Key]"
+                                                       @onblur="@(() => OnFilterInput())" />
+                                            </td>
+                                        }
+                                    }
+                                    @if (Parameters.ShowFilterRow)
+                                    {
+                                        <td>
+                                            <img src="/images/Doc-Cancel.png"
+                                                 alt="Cancel Filter"
+                                                 @onclick="@OnCancelFilerClick" />
+                                        </td>
+
+                                    }
+                                </tr>
+                            }
+                            <!--data rows-->
+                            @foreach (T model in Parameters.DataList)
+                            {
+                                Dictionary<string, object> valueDictionary = ConvertModelToDictionary(model);
+                                <tr>
+                                    @foreach (KeyValuePair<string, object> column in valueDictionary)
+                                    {
+                                        if (ShowInGrid(column.Key))
+                                        {
+                                            <td align="@Align(column.Key)">@FormatString(column.Key, column.Value)</td>
+                                        }
+                                    }
+                                    @if (Parameters.ShowEditColumn)
+                                    {
+                                        <td>
+                                            <button type="button"
+                                                    class="btn btn-outline-secondary"
+                                                    @onclick="@(() => OnEditEvent.InvokeAsync(GetPrimaryKeyValue(model)))">
+                                                @Parameters.EditButtonText
+                                            </button>
+
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>

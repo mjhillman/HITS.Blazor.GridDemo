@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <EnableNETAnalyzers>false</EnableNETAnalyzers>
+    <Version>2021.3.16</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="CustomerModel.cs" />
+    <Compile Remove="TestRecord.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Customers.csv" />
+    <None Remove="Sales.csv" />
+    <None Remove="SalesData.mdf" />
+    <None Remove="SalesData.zip" />
+    <None Remove="SalesData_log.ldf" />
+    <None Remove="TestData.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Sales.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HITS.Blazor.Grid\HITS.Blazor.Grid.csproj" />
+    <ProjectReference Include="..\HITS.LIB.Extensions\HITS.LIB.Extensions.csproj" />
+    <ProjectReference Include="..\HITS.LIB.SqlServer\HITS.LIB.SqlServer\HITS.LIB.SqlServer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
+</Project>

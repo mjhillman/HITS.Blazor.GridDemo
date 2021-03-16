@@ -1,0 +1,69 @@
+﻿@using System
+@implements IDisposable
+
+@if (ViewModel.PopupVisible)
+{
+    <div class="modal fade show" style="display:block" aria-modal="true" role="dialog" @onclick="OnCancel">
+        <div class="modal-dialog" @onclick:stopPropagation="true">
+            <div class="modal-content" style="background-color:@ViewModel.BackgroundColor">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">@ViewModel.DialogTitle</h4>
+                    <button type="button" class="close" @onclick="OnCancel">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>@ViewModel.DialogMessage</p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    @if (ViewModel.ShowCancelButton)
+                    {
+                        <button type="button" class="btn" @onclick="OnCancel">@ViewModel.CancelButtonName</button>
+                    }
+                    <button type="button" class="btn btn-info" @onclick=OnOk>@ViewModel.ConfirmButtonName</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    /// <summary>
+    /// The method to when the dialog closes.
+    /// </summary>
+    /// <remarks>The method is defined in the ModalDialog markup in the razor page.</remarks>
+    [Parameter]
+    public EventCallback<string> OnDialogClose { get; set; }
+
+    /// <summary>
+    /// The model contains field required for the modal dialog
+    /// </summary>
+    [Parameter]
+    public DialogViewModel ViewModel { get; set; } = new DialogViewModel();
+
+    void OnShow()
+    {
+        ViewModel.PopupVisible = true;
+    }
+
+    void OnCancel()
+    {
+        OnDialogClose.InvokeAsync(ViewModel.ButtonName);
+        ViewModel.PopupVisible = false;
+    }
+
+    void OnOk()
+    {
+        OnDialogClose.InvokeAsync(ViewModel.ButtonName);
+        ViewModel.PopupVisible = false;
+    }
+
+    public void Dispose()
+    {
+        ViewModel = null;
+    }
+}
