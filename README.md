@@ -14,7 +14,7 @@ Below is an example of displaying the contents of a list in the grid.
 
 ![image](https://user-images.githubusercontent.com/50423474/111496282-8f693880-8716-11eb-9358-b746fabc5dc9.png)
 
-Note the lack of column definitions.  Columns are controlled by the GridAttributes.
+Columns are controlled by the GridAttributes.
 
 ![image](https://user-images.githubusercontent.com/50423474/111496396-aa3bad00-8716-11eb-9543-b4d33a13ac00.png)
 
