@@ -20,6 +20,8 @@ Columns are controlled by the GridAttributes.
 
 ![image](https://user-images.githubusercontent.com/50423474/111496500-bf184080-8716-11eb-8a78-e0a671646263.png)
 
+![image](https://user-images.githubusercontent.com/50423474/111497057-2fbf5d00-8717-11eb-9520-c3a7cdcf1c38.png)
+
 Press TAB for filter input.
 
 https://www.nuget.org/packages/HITS.Blazor.Grid/
